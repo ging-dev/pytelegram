@@ -18,11 +18,10 @@ async def on_callback(message: types.Message) -> None:
     async with aiohttp.ClientSession() as session:
         async with session.get(links[0]) as response:
             dom: HtmlElement = html.fromstring(await response.text())
-            tam_su: list = dom.xpath('//meta[@name="tt_category_id" and @content="1001014"]')
-            if not tam_su:
+            if not dom.xpath('//meta[@name="tt_category_id" and @content="1001014"]'):
                 return
 
-    await message.answer('Fuk vnexpress !!!')
+    await message.reply('Hành vi của bạn vi phạm tiêu chuẩn cộng đồng của nhóm.')
     await message.delete()
 
 if __name__ == '__main__':
