@@ -10,13 +10,13 @@ dp = Dispatcher(bot)
 
 @dp.message_handler()
 async def on_callback(message: types.Message) -> None:
-    links = re.match(r'(https://\S+)', message.text.encode('ascii', 'ignore').decode())
+    matches = re.match(r'(https://\S+)', message.text.encode('ascii', 'ignore').decode())
 
-    if not links:
+    if not matches:
         return
 
     async with aiohttp.ClientSession() as session:
-        async with session.get(links[0]) as response:
+        async with session.get(matches[0]) as response:
             dom: HtmlElement = html.fromstring(await response.text())
             if not dom.xpath('//meta[@name="tt_category_id" and @content="1001014"]'):
                 return
