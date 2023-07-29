@@ -10,7 +10,7 @@ dp = Dispatcher(bot)
 
 @dp.message_handler()
 async def on_callback(message: types.Message) -> None:
-    links = re.match(r'(https://\S+)', message.text)
+    links = re.match(r'(https://\S+)', message.text.encode('ascii', 'ignore').decode())
 
     if not links:
         return
