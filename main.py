@@ -12,6 +12,9 @@ dp = Dispatcher(bot)
 async def on_callback(message: types.Message) -> None:
     matches = re.match(r'(https://\S+)', message.text.encode('ascii', 'ignore').decode())
 
+    if message.text is 'ê':
+        await message.reply('ai phụ huynh bé ton đón cháu về nè')
+
     if not matches:
         return
 
