@@ -14,6 +14,8 @@ async def on_callback(message: types.Message) -> None:
 
     if len(message.text) < 2:
         await message.reply('ai phụ huynh bé ton đón cháu về nè')
+    if message.text == 'ê':
+        await message.reply('j')
 
     if not matches:
         return
