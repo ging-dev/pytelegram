@@ -20,7 +20,7 @@ async def on_callback(message: types.Message) -> None:
     if message.text.startswith(qa_prefix):
         question = message.text.lstrip(qa_prefix).strip()
         message = await message.reply('Chờ tí tao tra Google...')
-        await message.edit_text(await get_reply_from_openai(question))
+        await message.edit_text(await get_reply_from_openai(question), parse_mode=types.ParseMode.MARKDOWN)
 
     matches = re.match(r'(https://\S+)', message.text.encode('ascii', 'ignore').decode())
 
