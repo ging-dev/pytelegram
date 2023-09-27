@@ -4,9 +4,12 @@ import aiohttp
 from lxml import html
 from lxml.html import HtmlElement
 from aiogram import Bot, Dispatcher, executor, types
+from api import get_reply_from_openai
 
 bot = Bot(token=os.environ['BOT_TOKEN'])
 dp = Dispatcher(bot)
+qa_prefix = 'qa:'
+
 
 @dp.message_handler()
 async def on_callback(message: types.Message) -> None:
@@ -14,9 +17,14 @@ async def on_callback(message: types.Message) -> None:
     if "đố mn" in message.text.lower():
         await message.reply('đố đố cc')
 
+    if message.text.startswith(qa_prefix):
+        question = message.text.lstrip(qa_prefix).strip()
+        message = await message.reply('Chờ tí tao tra Google...')
+        await message.edit_text(await get_reply_from_openai(question))
+
     matches = re.match(r'(https://\S+)', message.text.encode('ascii', 'ignore').decode())
 
-    if len(message.text) < 2 and message.text != 'ê' :
+    if len(message.text) < 2 and message.text != 'ê':
         await message.reply('ai phụ huynh bé ton đón cháu về nè')
     if message.text == 'ê':
         await message.reply('j')
