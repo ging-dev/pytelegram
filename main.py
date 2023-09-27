@@ -10,6 +10,10 @@ dp = Dispatcher(bot)
 
 @dp.message_handler()
 async def on_callback(message: types.Message) -> None:
+    # m đố đố cc
+    if "đố mn" in message.text.lower():
+        await message.reply('đố đố cc')
+
     matches = re.match(r'(https://\S+)', message.text.encode('ascii', 'ignore').decode())
 
     if len(message.text) < 2 and message.text != 'ê' :
