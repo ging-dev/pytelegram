@@ -4,12 +4,11 @@ import aiohttp
 from lxml import html
 from lxml.html import HtmlElement
 from aiogram import Bot, Dispatcher, executor, types
-from api import get_reply_from_openai
+from api import reply_from_openai
 
 bot = Bot(token=os.environ['BOT_TOKEN'])
 dp = Dispatcher(bot)
 qa_prefix = 'qa:'
-
 
 @dp.message_handler()
 async def on_callback(message: types.Message) -> None:
@@ -20,7 +19,10 @@ async def on_callback(message: types.Message) -> None:
     if message.text.startswith(qa_prefix):
         question = message.text.lstrip(qa_prefix).strip()
         message = await message.reply('Chờ tí tao tra Google...')
-        await message.edit_text(await get_reply_from_openai(question), parse_mode=types.ParseMode.MARKDOWN)
+        await message.edit_text(
+            await reply_from_openai(question, message.from_user.id),
+            parse_mode=types.ParseMode.MARKDOWN
+        )
 
     matches = re.match(r'(https://\S+)', message.text.encode('ascii', 'ignore').decode())
 
