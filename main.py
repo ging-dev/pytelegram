@@ -11,6 +11,7 @@ bot = Bot(token=os.environ['BOT_TOKEN'])
 dp = Dispatcher(bot)
 qa_prefix = 'qa:'
 
+
 @dp.message_handler()
 async def on_callback(message: types.Message) -> None:
     # m đố đố cc
@@ -25,7 +26,8 @@ async def on_callback(message: types.Message) -> None:
             parse_mode=types.ParseMode.MARKDOWN
         )
 
-    matches = re.match(r'(https://\S+)', message.text.encode('ascii', 'ignore').decode())
+    matches = re.match(
+        r'(https://\S+)', message.text.encode('ascii', 'ignore').decode())
 
     if len(message.text) < 2 and message.text != 'ê':
         await message.reply('ai phụ huynh bé ton đón cháu về nè')
@@ -33,7 +35,9 @@ async def on_callback(message: types.Message) -> None:
         await message.reply('j')
     if message.text.lower() == "!hentai":
         image_url = await get_random_image()
-        await message.answer_photo(photo=image_url)
+        await (message.answer_animation
+               if image_url.endswith('.gif')
+               else message.answer_photo)(image_url)
 
     if not matches:
         return
