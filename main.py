@@ -7,7 +7,7 @@ from aiogram import Bot, Dispatcher, executor, types
 from api import reply_from_openai
 from hentai import get_random_image
 
-bot = Bot(token="6308559113:AAH7C-UDiYNA3kivaG9uBI2Vgw0YWDkqp1Y")
+bot = Bot(token=os.environ['BOT_TOKEN'])
 dp = Dispatcher(bot)
 qa_prefix = 'qa:'
 
