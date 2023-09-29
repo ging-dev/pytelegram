@@ -5,6 +5,7 @@ from lxml import html
 from lxml.html import HtmlElement
 from aiogram import Bot, Dispatcher, executor, types
 from api import reply_from_openai
+from hentai import get_random_image
 
 bot = Bot(token=os.environ['BOT_TOKEN'])
 dp = Dispatcher(bot)
@@ -30,6 +31,9 @@ async def on_callback(message: types.Message) -> None:
         await message.reply('ai phụ huynh bé ton đón cháu về nè')
     if message.text == 'ê':
         await message.reply('j')
+    if message.text.lower() == "!hentai":
+        image_url = await get_random_image()
+        await message.answer_photo(photo=image_url)
 
     if not matches:
         return
