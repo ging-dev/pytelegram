@@ -14,6 +14,10 @@ qa_prefix = 'qa:'
 
 @dp.message_handler()
 async def on_callback(message: types.Message) -> None:
+    if any([x in message.text.lower() for x in ["organic", "ỏganic"]]):
+        await message.reply("Ngôn ngữ gây thù ghét")
+        await message.delete()
+
     # m đố đố cc
     if "đố mn" in message.text.lower():
         await message.reply('đố đố cc')
