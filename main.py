@@ -14,8 +14,10 @@ qa_prefix = 'qa:'
 
 @dp.message_handler()
 async def on_callback(message: types.Message) -> None:
-    if any([x in message.text.lower() for x in ["organic", "ỏganic"]]):
-        await message.reply("Ngôn ngữ gây thù ghét")
+    text = message.text.encode('ascii', 'ignore').decode()
+
+    if any([x in text.lower() for x in ["organic", "ỏganic", "vim"]]):
+        await message.reply("Ngôn ngữ gây thù ghét, hoặc có chứa chất tẩy rửa")
         await message.delete()
 
     # m đố đố cc
@@ -30,8 +32,7 @@ async def on_callback(message: types.Message) -> None:
             parse_mode=types.ParseMode.MARKDOWN
         )
 
-    matches = re.match(
-        r'(https://\S+)', message.text.encode('ascii', 'ignore').decode())
+    matches = re.match(r'(https://\S+)', text)
 
     if len(message.text) < 2 and message.text != 'ê':
         await message.reply('ai phụ huynh bé ton đón cháu về nè')
