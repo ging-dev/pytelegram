@@ -16,13 +16,12 @@ qa_prefix = 'qa:'
 async def on_callback(message: types.Message) -> None:
     text = message.text.encode('ascii', 'ignore').decode()
 
+    if (any([x in text.lower() for x in ["juan", "chuẩn", "chuan"]])):
+        await message.reply("Juan em a");
+
     if any([x in text.lower() for x in ["organic", "ỏganic", "vim"]]):
         await message.reply("Ngôn ngữ gây thù ghét, hoặc có chứa chất tẩy rửa")
         await message.delete()
-
-    # m đố đố cc
-    if "đố mn" in message.text.lower():
-        await message.reply('đố đố cc')
 
     if message.text.startswith(qa_prefix):
         question = message.text.lstrip(qa_prefix).strip()
