@@ -16,32 +16,21 @@ qa_prefix = 'qa:'
 async def on_callback(message: types.Message) -> None:
     text = message.text.encode('ascii', 'ignore').decode()
 
-    if (any([x in text.lower() for x in ["juan", "chuẩn", "chuan"]])):
-        await message.reply("Juan em a");
-
-    if any([x in text.lower() for x in ["organic", "ỏganic", "vim"]]):
-        await message.reply("Ngôn ngữ gây thù ghét, hoặc có chứa chất tẩy rửa")
-        await message.delete()
-
     if message.text.startswith(qa_prefix):
-        question = message.text.lstrip(qa_prefix).strip()
+        question = text.lstrip(qa_prefix).strip()
         message = await message.reply('Chờ tí tao tra Google...')
         await message.edit_text(
             await reply_from_openai(question, message.from_user.id),
             parse_mode=types.ParseMode.MARKDOWN
         )
 
-    matches = re.match(r'(https://\S+)', text)
-
-    if len(message.text) < 2 and message.text != 'ê':
-        await message.reply('ai phụ huynh bé ton đón cháu về nè')
-    if message.text == 'ê':
-        await message.reply('j')
     if message.text.lower() == "!hentai":
         image_url = await get_random_image()
         await (message.answer_animation
                if image_url.endswith('.gif')
                else message.answer_photo)(image_url)
+
+    matches = re.match(r'(https://\S+)', text)
 
     if not matches:
         return
